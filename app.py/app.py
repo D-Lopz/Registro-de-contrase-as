@@ -1,25 +1,31 @@
 import time
 
+class User:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def __repr__(self):
+        return f"User(username='{self.username}', password='{self.password}')"
+
 DefaultUsers = [
-    ('juanito123', '124'),
-    ('juanito1234', '124'),
-    ('juanito1235', '124'),
-    ('diego123', '123'),
+    User('juanito123', '124'),
+    User('juanito1234', '124'),
+    User('juanito1235', '124'),
+    User('diego123', '123'),
 ]
 users = DefaultUsers[:]
 
 def quicksort(users):
-
     if len(users) <= 1:
         return users
     else:
-
         pivot = users[len(users) // 2]
-        left = [x for x in users if x[0] < pivot[0]]
-        middle = [x for x in users if x[0] == pivot[0]]
-        right = [x for x in users if x[0] > pivot[0]]
-
+        left = [x for x in users if x.username < pivot.username]
+        middle = [x for x in users if x.username == pivot.username]
+        right = [x for x in users if x.username > pivot.username]
         return quicksort(left) + middle + quicksort(right)
+
 
 def binary_search(users, username):
 
@@ -29,10 +35,10 @@ def binary_search(users, username):
     while low <= high:
 
         mid = (low + high) // 2
-        if users[mid][0] == username:
+        if users[mid].userame == username:
             return mid
 
-        elif users[mid][0] < username:
+        elif users[mid].username < username:
             low = mid + 1
 
         else:
@@ -54,7 +60,7 @@ def login():
         time.sleep(1)
         print("Password checked")
 
-        if users[idx][1] == password:
+        if users[idx].password == password:
 
             print("Password correct")
             print(f"Login successful, {username}")
@@ -78,7 +84,8 @@ def register():
 
     else:
         password = input("Password: ")
-        users.append((username, password))
+        new_user = User(username, password)
+        users.append((new_user))
         users[:] = quicksort(users)
 
         print(f"Register successful, user {username}")
@@ -98,7 +105,8 @@ def eUser():
 
         else:
             new_password = input("New password: ")
-            users[idx] = (new_username, new_password)
+            users[idx].username = new_username
+            users[idx].password = new_password
             users[:] = quicksort(users)
 
             print("User edited successfully")
