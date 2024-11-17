@@ -35,7 +35,7 @@ def binary_search(users, username):
     while low <= high:
 
         mid = (low + high) // 2
-        if users[mid].userame == username:
+        if users[mid].username == username:
             return mid
 
         elif users[mid].username < username:
